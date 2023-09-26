@@ -13,16 +13,16 @@ const app = express();
 const PORT = process.env.PORT || 3500;
 
 connectDB();
-
+app.use(express.static("public"));
 app.use(logger);
 app.use(cors(corsOptions));
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("hello");
+  res.sendFile("index.html", { root: "server" + "/public" });
 });
 
-app.use(errorHandler());
+app.use(errorHandler);
 
 mongoose.connection.once("open", () => {
   console.log("Connected to MongoDB");
